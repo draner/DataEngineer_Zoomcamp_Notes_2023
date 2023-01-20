@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
+from prefect import tasks
 
 
 @task(retries=3)
@@ -26,8 +27,7 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     """Write data to local disk as a parquet file."""
     path = Path(f"data/{color}/{dataset_file}.parquet")
-    path.parent.mkdir(parents=True, exist_ok=True)
-    print(path)
+    print(f"Writing {path}")
     df.to_parquet(path)
     return path
 
@@ -35,13 +35,13 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
 def write_gcs(path: Path) -> None:
     """Write data to GCS."""
     gcp_cloud_storage_bucket_block = GcsBucket.load("gcs-de-zoomcamp")
-    gcp_cloud_storage_bucket_block.upload_from_path(
-        from_path=f"{path}",
-        to_path=path
-    )
+    print(f"Writing {path} to GCS")
+    gcp_cloud_storage_bucket_block.upload_from_path(path)
     return
 
-
+@task(log_prints=True)
+def test() -> None: 
+    tasks.gcp.storage.GCSUpload.run("foobar")
 
 @flow()
 def etl_web_to_gcs() -> None:

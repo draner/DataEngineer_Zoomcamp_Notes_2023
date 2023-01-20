@@ -5,6 +5,7 @@ from prefect_gcp.cloud_storage import GcsBucket
 from prefect import tasks
 
 
+
 @task(retries=3)
 def fetch(url: str) -> pd.DataFrame:
     """Fetch data from web."""
@@ -36,7 +37,8 @@ def write_gcs(path: Path) -> None:
     """Write data to GCS."""
     gcp_cloud_storage_bucket_block = GcsBucket.load("gcs-de-zoomcamp")
     print(f"Writing {path} to GCS")
-    gcp_cloud_storage_bucket_block.upload_from_path(path)
+    path = Path(path).as_posix()
+    gcp_cloud_storage_bucket_block.upload_from_path(from_path= path, to_path= path)
     return
 
 @task(log_prints=True)

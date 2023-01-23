@@ -7,7 +7,7 @@ from prefect_gcp.bigquery import GcpCredentials
 @task(log_prints=True, retries=3)
 def extract_from_gcs(color: str, year: int, month: int) -> Path:
     """Extract data from GCS."""
-    gcs_path = f"{color}_tripdata_{year}-{month:02}.parquet"
+    gcs_path = f"data/{color}/{color}_tripdata_{year}-{month:02}.parquet"
     gcp_cloud_storage_bucket_block = GcsBucket.load("gcs-de-zoomcamp")
     gcp_cloud_storage_bucket_block.get_directory(from_path= gcs_path, local_path="data/")
     return Path(f"data/{gcs_path}")

@@ -16,8 +16,8 @@ def fetch(url: str) -> pd.DataFrame:
 @task(log_prints=True)
 def clean(df: pd.DataFrame) -> pd.DataFrame:
     """Clean data."""
-    df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
-    df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
+    df['lpep_pickup_datetime'] = pd.to_datetime(df['lpep_pickup_datetime'])
+    df['lpep_dropoff_datetime'] = pd.to_datetime(df['lpep_dropoff_datetime'])
     print(df.head(2))
     print(f"shape: {df.shape}")
 
@@ -49,9 +49,9 @@ def test() -> None:
 def etl_web_to_gcs() -> None:
     """ETL data from web to GCS."""
     # Download data from web
-    color = "yellow"
-    year = 2019
-    month = 3
+    color = "green"
+    year = 2020
+    month = 11
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 

@@ -8,7 +8,9 @@ from datetime import timedelta
 
 
 
-@task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
+# @task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
+# Test without the cache for now
+@task(retries=3)
 def fetch(url: str) -> pd.DataFrame:
     """Fetch data from web."""
     df = pd.read_csv(url)
@@ -39,7 +41,7 @@ def write_gcs(path: Path) -> None:
     """Write data to GCS."""
     gcp_cloud_storage_bucket_block = GcsBucket.load("gcs-de-zoomcamp")
     print(f"Writing {path} to GCS")
-    path = Path(path).as_posix()
+    #path = Path(path).as_posix()
     gcp_cloud_storage_bucket_block.upload_from_path(from_path= path, to_path= path)
     return
 

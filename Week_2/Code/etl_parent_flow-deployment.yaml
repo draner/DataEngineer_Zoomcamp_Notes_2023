@@ -9,7 +9,7 @@ work_queue_name: default
 work_pool_name: null
 work_pool_queue_name: null
 tags: []
-parameters: { "color": "yellow", "month": [1,2,3], "year":2021}
+parameters: {}
 schedule: null
 infra_overrides: {}
 infrastructure:
@@ -30,7 +30,7 @@ flow_name: etl-parent-flow
 manifest_path: null
 storage: null
 path: E:\Data Science Personal Projects\DE Zoomcamp\DE_zoomcamp_notes\Week_2\Code
-entrypoint: GCP\parameterized_flow.py:etl_parent_flow
+entrypoint: flows\parameterized_flow.py:etl_parent_flow
 parameter_openapi_schema:
   title: Parameters
   type: object
@@ -56,4 +56,4 @@ parameter_openapi_schema:
       type: string
   required: null
   definitions: null
-timestamp: '2023-01-23T13:49:52.116622+00:00'
+timestamp: '2023-01-24T14:06:13.109569+00:00'

@@ -46,7 +46,7 @@ def test() -> None:
     tasks.gcp.storage.GCSUpload.run("foobar")
 
 @flow()
-def etl_web_to_gcs() -> None:
+def etl_web_to_gcs_q4() -> None:
     """ETL data from web to GCS."""
     # Download data from web
     color = "green"

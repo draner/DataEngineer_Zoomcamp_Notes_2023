@@ -50,8 +50,8 @@ def etl_web_to_gcs_q4() -> None:
     """ETL data from web to GCS."""
     # Download data from web
     color = "green"
-    year = 2020
-    month = 11
+    year = 2019
+    month = 4
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 

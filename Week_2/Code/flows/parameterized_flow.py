@@ -20,8 +20,8 @@ def fetch(url: str) -> pd.DataFrame:
 @task(log_prints=True)
 def clean(df: pd.DataFrame) -> pd.DataFrame:
     """Clean data."""
-    df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
-    df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
+    df['lpep_pickup_datetime'] = pd.to_datetime(df['lpep_pickup_datetime'])
+    df['lpep_dropoff_datetime'] = pd.to_datetime(df['lpep_dropoff_datetime'])
     print(df.head(2))
     print(f"shape: {df.shape}")
 
@@ -41,7 +41,7 @@ def write_gcs(path: Path) -> None:
     """Write data to GCS."""
     gcp_cloud_storage_bucket_block = GcsBucket.load("gcs-de-zoomcamp")
     print(f"Writing {path} to GCS")
-    #path = Path(path).as_posix()
+    path = Path(path).as_posix()
     gcp_cloud_storage_bucket_block.upload_from_path(from_path= path, to_path= path)
     return
 
@@ -63,12 +63,12 @@ def etl_web_to_gcs(year: int, month: int, color: str) -> None:
 
 
 @flow()
-def etl_parent_flow(month: list[int] = [1,2], year: int = 2021, color: str = "yellow") -> None:
+def etl_parent_flow(month: list[int] = [1,2,3], year: int = 2019, color: str = "yellow") -> None:
     for m in month:
         etl_web_to_gcs(year, m, color)
 
 if __name__ == "__main__":
-    color="yellow"
-    months = [1,2,3]
-    year=2021
+    color="green"
+    months = [1,2,3,4,5,6,7,8,9,10,11,12]
+    year=2020
     etl_parent_flow(months, year, color)
